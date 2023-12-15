@@ -8,12 +8,23 @@ from key import secret_key,salt,salt2
 from otp import genotp
 from cmail import sendmail
 from io import BytesIO
-mydb=mysql.connector.connect(host='localhost',user='root',password='Admin',db='prm')
 app=Flask(__name__)
+app.secret_key=secret_key
 app.config['SESSION_TYPE']='filesystem'
+#mydb=mysql.connector.connect(host='localhost',user='root',password='Admin',db='prm')
+user=os.environ.get('RDS_USERNAME')
+db=os.environ.get('RDS_DB_NAME')
+password=os.environ.get('RDS_PASSWORD')
+host=os.environ.get('RDS_HOSTNAME')
+port=os.environ.get('RDS_PORT')
+with mysql.connector.connect(host=host,user=user,password=password,db=db,port=port) as pr
+cursor=pr.cursor()
+cursor.execute('create table if not exists users(user_id varchar(6) not null,user_name varchar(30) not null,email varchar(50) primary key,mobile bigint not null unique,address longtext,password varchar(8))')
+cursor,execute('create table if not exists notes(notes_id binary(16) not null,title varchar(250) not null,descr longtext,date timestamp not null default current_timestamp,addedby varchar(50),foreign key(addedby) references users(email))')
+cursor.execute('create table if not exists files(file_id binary(16) not null,file_extension varchar(10) not null,data longblob,date datetime not null default current_timestamp,addedby varchar(50),foreign key(addedby) references users(email))')
+mydb=mysql.conector.connect(user=user,password=password,db=db,host=host,port=port)
 Session(app)
 excel.init_excel(app)
-app.secret_key=secret_key
 @app.route('/')
 def welcome():
     return render_template('index.html')
