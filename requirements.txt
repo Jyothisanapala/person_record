@@ -9,7 +9,6 @@ colorama==0.4.6
 cssselect2==0.7.0
 Flask==3.0.0
 Flask-Session==0.5.0
-flask_weasyprint==1.1.0
 fonttools==4.46.0
 html5lib==1.1
 idna==3.6
@@ -28,7 +27,6 @@ stripe==7.7.0
 tinycss2==1.2.1
 typing_extensions==4.8.0
 urllib3==2.1.0
-weasyprint==60.1
 webencodings==0.5.1
 Werkzeug==3.0.1
 zopfli==0.2.3
